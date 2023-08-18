@@ -14,6 +14,15 @@ class Node{
         this->data=data;
         this->next=NULL;
     }
+    ~Node(){
+      int val=this->data;
+      if(this->next!=NULL){
+        delete next;
+        this->next=NULL;
+      }
+      cout << "Memory is free for node: " << val << endl;
+      
+    }
     
 };
 
@@ -73,6 +82,74 @@ void inserAtPosition(Node* &head,Node* &tail, int pos, int d){
 
 }
 
+void deleteAtPos(Node* &head, int pos){
+  // for head Node
+    if(pos==1){
+      Node* curr=head;
+      head=head->next;
+      curr->next=NULL;
+      delete curr;
+ 
+    }
+
+      
+  //for middle and Last Node
+    else{
+      Node* prev=head;
+      Node* curr=head;
+      int cnt=1;
+      while(cnt < pos-1){  //same approach here move prev and make curr=prev->next As simple it is
+        // curr=prev;
+        prev=prev->next;
+        cnt++;    // Ye Yad rkho Bhaiya Hamesa Bhul Jate Ho
+ 
+      }
+       curr=prev->next;
+       prev->next=curr->next;
+       curr->next=NULL;
+       delete curr;
+
+  }
+
+}
+
+// HERE IT IS FOR UPDATION OF TAIL
+
+void deleteAtPos_1(Node* &head,Node* &tail, int pos){
+  // for head Node
+    if(pos==1){
+      Node* curr=head;
+      head=head->next;
+      curr->next=NULL;
+      delete curr;
+ 
+    }
+
+      
+  //for middle and Last Node
+    else{
+      Node* prev=head;
+      Node* curr=head;
+      int cnt=1;
+      while(cnt < pos-1){  //same approach here move prev and make curr=prev->next As simple it is
+        // curr=prev;
+        prev=prev->next;
+        cnt++;    // Ye Yad rkho Bhaiya Hamesa Bhul Jate Ho
+ 
+      }
+       curr=prev->next;
+       prev->next=curr->next;
+       curr->next=NULL;
+       delete curr;
+       if(prev->next==NULL){
+         tail=prev;
+
+       }
+ 
+  }
+
+}
+
 int main() {
     
     Node*head=NULL;
@@ -93,6 +170,10 @@ int main() {
   
 
   inserAtPosition(head,tail,4,40);
+  print(head);
+  // deleteAtPos(head,4);
+  // print(head);
+  deleteAtPos_1(head,tail,4);
   print(head);
   cout << "head ka data: "<<head->data << endl;
   cout << "tail ka data: "<<tail->data << endl;
