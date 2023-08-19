@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node* next;
+
+    Node(int data){
+      this->data=data;
+      this->next=NULL;
+    }
+
+~Node(){
+  int val=this->data;
+  if(this->next!=NULL){
+    delete next;
+    this->next=NULL;
+  }
+  cout << "Memory is free for the Node is: " << val << endl;
+  
+}
+};
+
+void insertNode(Node* &tail, int element, int d){
+  // Here we are inserting node after just element
+  if(tail==NULL){
+    Node* temp=new Node(d);
+    tail=temp;
+    temp->next=temp;
+  }
+  else{
+    // non-empty list
+    //Assuming that element is present in the list
+    Node* curr=tail;
+    while(curr->data!=element){
+      curr=curr->next;
+    }
+    Node* temp=new Node(d);
+    temp->next=curr->next; // it will also cover the insertion at end
+    curr->next=temp;
+
+  }
+}
+void print(Node* &tail){
+  Node* temp=tail;
+  do{
+    cout << tail->data<< " ";
+    tail=tail->next;
+  }while(tail!=temp);
+  cout << endl;
+ }
+
+void deleteNode(Node* &tail,int value){
+  //Here we are deleting on the basis of value , and not position
+  if(tail==NULL){
+    cout << "List is empty" << endl;
+    return;
+  }
+  else{
+    Node* prev=tail;
+    Node* curr=prev->next;
+    while(curr->data!=value){
+      prev=curr;
+      curr=curr->next;
+      
+    }
+    prev->next=curr->next;
+    if(tail==curr){
+      tail=prev;
+    }
+    curr->next=NULL;
+    delete curr;
+
+  }
+  
+}
+
+int main() {
+  Node* tail=NULL;
+  insertNode(tail,2,3);
+  print(tail);
+  insertNode(tail,3,4);
+  print(tail);
+  insertNode(tail,4,5);
+  print(tail);
+  deleteNode(tail,3);
+  print(tail);
+  
+  
+}
