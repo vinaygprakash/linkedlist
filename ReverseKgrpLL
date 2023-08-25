@@ -1,3 +1,13 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
 int getLength(ListNode* head) {
@@ -24,7 +34,8 @@ int getLength(ListNode* head) {
         int cnt = 0;
         int x=getLength(head);
 
-        if(x >= k){
+        if(x < k)
+            return head; // yha aise socha as k > element then smj aa jayega ki why return head
         
         while(curr!=NULL && cnt<k){
             nextptr = curr->next;
@@ -33,10 +44,7 @@ int getLength(ListNode* head) {
             curr = nextptr;
             cnt++;
             }
-        }
-        else{
-            return head; // yha aise socha as k > element then smj aa jayega ki why return head
-        }
+        
         
         if(nextptr != NULL){
             head->next = reverseKGroup(nextptr,k);
