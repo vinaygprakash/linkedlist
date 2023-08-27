@@ -1,0 +1,107 @@
+*****************************************************************************************************************************************************************************
+// if we have to replace original node
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+        int zerocount=0;
+        int onecount=0;
+        int twocount=0;
+        
+        Node* temp=head;
+        
+        while(temp!=NULL){
+            if(temp->data==0){ // if condition me double time equal lagta hai..
+                zerocount++;
+            }
+            else if(temp->data==1){
+                onecount++;
+            }
+            else if(temp->data==2){
+                twocount++;
+            }
+            temp=temp->next;
+        }
+        temp=head;
+        while(temp!=NULL){
+            if(zerocount!=0){
+                temp->data=0;
+                zerocount--;
+            }
+            else if(onecount!=0){
+                temp->data=1;
+                onecount--;
+                
+            }
+            else if(twocount!=0){
+                temp->data=2;
+                twocount--;
+            }
+            
+            temp=temp->next;
+        }
+        
+        return head; 
+        
+    }
+};
+****************************************************************************************************************************************************************************
+// If data replacement is not allowed.......
+class Solution
+{
+    public:
+    void insertattail(Node* &tail, Node* temp ){ // This type of thing with relkated function is good
+         
+        tail->next=temp;
+        tail=temp;
+   
+    }
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+       // creation of Dummy Nodes
+      Node* zerohead=new Node(-1);
+      Node* zerotail=zerohead;
+      Node* onehead=new Node(-1);
+      Node* onetail=onehead;
+      Node* twohead=new Node(-1);
+      Node* twotail=twohead;
+      
+      // Creation of linked list of every pair
+      Node* temp=head;
+      while(temp!=NULL){
+          int val=temp->data;
+      if(val==0){
+                insertattail(zerotail,temp);
+          
+      }else if(val==1){
+                insertattail(onetail,temp);
+      }else if(val==2){
+                insertattail(twotail,temp);
+      }
+      temp=temp->next;
+      
+      
+    }
+    // Adding of linked list
+    
+    // if list is not empty
+    if(onehead->next!=NULL){
+        zerotail->next=onehead->next;
+        onetail->next=twohead->next;
+        twotail->next=NULL;
+    }else{
+        zerotail->next=twohead->next;
+         twotail->next=NULL;
+        
+        
+    }
+    head=zerohead->next;
+    
+    delete zerohead;
+    delete onehead;
+    delete twohead;
+    
+    return head;
+    }
+};
